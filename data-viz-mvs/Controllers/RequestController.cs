@@ -46,7 +46,6 @@ namespace dataviz.Controllers
 
     public class RequestController : Controller
     {
-        //
         // GET: /Request/
         static HttpClient client = new HttpClient();
 
@@ -93,33 +92,20 @@ namespace dataviz.Controllers
                     url += "&";
                 url += pair.Key + "=" + pair.Value;
             }
-            /*foreach (String key in Request.QueryString.AllKeys)
-            {
-                dict.Add(key, Request.QueryString[key]);
-            }
-            dict.Add("you", Request.QueryString["datasetCode"] ?? "fail");
-            */
-            
-            //string dummyRequest = "http://data-viz-v1.herokuapp.com/services/dummyRequest?database_code=WIKI&dataset_code=AAPL&start_date=2017-06-06&end_date=2018-06-06&order=asc&collapse=quarterly";
             
             string str = null;
             
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                //var formatter = new List<MediaTypeFormatter>() { new JsonMediaTypeFormatter() };
                 str = await response.Content.ReadAsStringAsync();
             }
 
-            //str = "{ \"test\": 34 }";
-            
-            //var json = str;
             var json = JsonConvert.DeserializeObject<RootObject>(str);
 
             
             Debug.WriteLine(str);
 
-            //JObject json = JObject.Parse(str);
 
             Debug.WriteLine(json);
             
@@ -128,10 +114,6 @@ namespace dataviz.Controllers
             Response.ContentType = "application/json";
                 
             return ret;
-            
-            //return Json(ret, JsonRequestBehavior.AllowGet);
-            
-            //return Json(dict, JsonRequestBehavior.AllowGet);
         }
 
 
